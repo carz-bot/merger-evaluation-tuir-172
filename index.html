@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Caso di studio teorico e anonimizzato sull'art. 172, comma 7, TUIR e sulla valutazione di una fusione per incorporazione." />
+  <title>MERGER_EVALUATION | Caso teorico art. 172, co. 7, TUIR</title>
+  <style>
+    :root {
+      --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --card:#ffffff;
+      --bg:#f8fafc; --indigo:#4f46e5; --teal:#0f766e; --green:#166534;
+      --red:#991b1b; --amber:#9a3412;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif; background:linear-gradient(135deg,#eef2ff 0%,#f8fafc 45%,#ecfeff 100%); color:var(--ink); }
+    button { font:inherit; }
+    .app { display:grid; grid-template-columns:300px 1fr; min-height:100vh; }
+    .sidebar { position:sticky; top:0; height:100vh; overflow:auto; padding:28px 22px; color:#fff; background:radial-gradient(circle at top left,#243047 0%,#0f172a 42%,#020617 100%); }
+    .brand { display:flex; gap:13px; align-items:flex-start; }
+    .logo { width:52px; height:52px; border-radius:17px; display:grid; place-items:center; font-weight:950; background:linear-gradient(135deg,#6366f1,#14b8a6); box-shadow:0 12px 30px rgba(99,102,241,.3); }
+    .brand h1 { margin:2px 0 0; font-size:1.05rem; letter-spacing:.02em; }
+    .brand p { margin:.35rem 0 0; color:#94a3b8; font-size:.82rem; line-height:1.5; }
+    .nav-title { margin:28px 8px 10px; color:#64748b; font-size:.68rem; text-transform:uppercase; letter-spacing:.18em; font-weight:900; }
+    .nav button { width:100%; border:0; cursor:pointer; text-align:left; color:#cbd5e1; background:transparent; border-radius:15px; padding:13px 14px; margin-bottom:6px; display:flex; align-items:center; gap:11px; font-weight:750; transition:.18s ease; }
+    .nav button:hover { background:rgba(255,255,255,.06); color:#fff; }
+    .nav button.active { color:#fff; background:linear-gradient(135deg,rgba(99,102,241,.2),rgba(20,184,166,.16)); box-shadow:inset 0 0 0 1px rgba(255,255,255,.08); }
+    .dot { width:9px; height:9px; border-radius:50%; background:#475569; }
+    .nav button.active .dot { background:#a5b4fc; box-shadow:0 0 0 5px rgba(99,102,241,.1); }
+    .side-note { margin-top:28px; padding:17px; border:1px solid rgba(255,255,255,.08); border-radius:19px; background:rgba(255,255,255,.04); color:#cbd5e1; font-size:.79rem; line-height:1.65; }
+    .main { padding:28px 32px 60px; min-width:0; }
+    .toolbar { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:15px; }
+    .badge { display:inline-block; padding:8px 12px; border-radius:999px; color:#3730a3; background:#eef2ff; border:1px solid #c7d2fe; font-size:.77rem; font-weight:850; }
+    .print { border:1px solid var(--line); background:#fff; color:#334155; padding:9px 13px; border-radius:12px; cursor:pointer; font-weight:750; }
+    .hero { padding:32px; border:1px solid var(--line); border-radius:30px; background:linear-gradient(135deg,#fff,#eef2ff); box-shadow:0 15px 35px rgba(15,23,42,.06); }
+    .kicker { color:var(--indigo); font-size:.7rem; text-transform:uppercase; letter-spacing:.22em; font-weight:950; }
+    .hero h2 { margin:8px 0 0; font-size:clamp(2rem,4vw,3rem); line-height:1.04; letter-spacing:-.045em; font-style:italic; }
+    .hero p { max-width:980px; color:#475569; line-height:1.8; }
+    .hero-grid,.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+    .hero-grid { margin-top:22px; }
+    .stat,.card { border:1px solid var(--line); border-radius:21px; padding:17px; background:#fff; }
+    .stat b,.metric b { display:block; color:var(--muted); font-size:.66rem; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px; }
+    .stat span,.metric span { font-size:1.1rem; font-weight:950; }
+    .tab { display:none; margin-top:20px; }
+    .tab.active { display:block; }
+    .section { margin-top:18px; padding:27px; border:1px solid var(--line); border-radius:28px; background:#fff; box-shadow:0 7px 22px rgba(15,23,42,.04); }
+    .section h3 { margin:0 0 12px; font-size:1.4rem; letter-spacing:-.025em; }
+    .section p,.section li { color:#334155; line-height:1.82; }
+    .metric-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:12px; }
+    .metric { padding:13px; border:1px solid var(--line); border-radius:16px; background:#fff; }
+    .pill { display:inline-block; margin:9px 6px 0 0; padding:6px 10px; border-radius:999px; font-size:.75rem; font-weight:900; }
+    .ok { color:var(--green); background:#dcfce7; border:1px solid #86efac; }
+    .ko { color:var(--red); background:#fee2e2; border:1px solid #fca5a5; }
+    .warn { color:var(--amber); background:#fff7ed; border:1px solid #fed7aa; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:19px; }
+    table { width:100%; min-width:720px; border-collapse:collapse; }
+    th,td { padding:13px 14px; border-bottom:1px solid var(--line); text-align:left; font-size:.88rem; }
+    th { color:var(--muted); background:#f8fafc; font-size:.66rem; text-transform:uppercase; letter-spacing:.09em; }
+    .callout { padding:20px; border-radius:21px; color:#e2e8f0; background:linear-gradient(135deg,#0f172a,#1e293b); line-height:1.8; }
+    .callout strong { color:#fff; }
+    .note { padding:16px; border:1px solid #fed7aa; border-radius:18px; background:#fff7ed; color:#9a3412; line-height:1.7; }
+    .source { margin-top:18px; color:#64748b; font-size:.76rem; line-height:1.6; }
+    .footer { margin-top:20px; color:#64748b; font-size:.76rem; text-align:center; }
+    @media (max-width:920px) { .app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.main{padding:20px}.toolbar{align-items:flex-start;flex-direction:column} }
+    @media print { .sidebar,.toolbar{display:none}.app{display:block}.main{padding:0}.tab{display:block}.section,.hero{box-shadow:none;break-inside:avoid}body{background:#fff} }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">ME</div>
+      <div><h1>MERGER_EVALUATION</h1><p>Caso teorico con sole etichette funzionali, privo di denominazioni societarie.</p></div>
+    </div>
+    <div class="nav-title">Navigazione</div>
+    <div class="nav">
+      <button class="active" data-tab="overview"><span class="dot"></span>Quadro generale</button>
+      <button data-tab="tests"><span class="dot"></span>Test art. 172</button>
+      <button data-tab="interim"><span class="dot"></span>Infrannuale pre-fusione</button>
+      <button data-tab="post"><span class="dot"></span>Risultati post-fusione</button>
+      <button data-tab="memo"><span class="dot"></span>Schema difensivo</button>
+      <button data-tab="conclusions"><span class="dot"></span>Conclusioni</button>
+    </div>
+    <div class="side-note"><strong>Avvertenza.</strong><br/>Non sono utilizzate denominazioni societarie: le parti sono indicate esclusivamente come Societa A e Societa B. Date e importi sono sintetici e modificati. Il progetto è esclusivamente didattico e non costituisce consulenza fiscale o legale.</div>
+  </aside>
+
+  <main class="main">
+    <div class="toolbar"><span class="badge">Caso studio sintetico • Fusione 2023</span><button class="print" onclick="window.print()">Stampa / PDF</button></div>
+    <section class="hero">
+      <div class="kicker">Case study & defensive framework</div>
+      <h2>Valutazione teorica di una fusione ex art. 172, comma 7, TUIR</h2>
+      <p>Scenario anonimizzato di fusione per incorporazione con retrodatazione fiscale, perdite pregresse in entrambe le società, verifica del limite patrimoniale, test di vitalità e analisi dei risultati post-fusione.</p>
+      <div class="hero-grid">
+        <div class="stat"><b>Atto di fusione</b><span>15/11/2023</span></div>
+        <div class="stat"><b>Retrodatazione fiscale</b><span>01/01/2023</span></div>
+        <div class="stat"><b>Societa A</b><span>Societa A (incorporata)</span></div>
+        <div class="stat"><b>Societa B</b><span>Societa B (incorporante)</span></div>
+      </div>
+    </section>
+
+    <section id="tab-overview" class="tab active">
+      <div class="section">
+        <h3>Scenario teorico</h3>
+        <p><strong>Societa A (incorporata)</strong>, società operativa nel settore della ristorazione, viene incorporata in <strong>Societa B (incorporante)</strong>, società patrimoniale-operativa con disponibilità immobiliari e attività commerciale. Entrambe presentano perdite fiscali pregresse. La fusione mira a integrare gestione operativa, asset e funzioni amministrative.</p>
+        <div class="grid">
+          <div class="card"><h4>Societa A (incorporata)</h4><div class="metric-grid"><div class="metric"><b>Perdite fiscali</b><span>€ 248.000</span></div><div class="metric"><b>PN limite</b><span>€ 42.000</span></div><div class="metric"><b>Vitalità 2022</b><span>OK</span></div><div class="metric"><b>Vitalità infrannuale</b><span>OK</span></div></div></div>
+          <div class="card"><h4>Societa B (incorporante)</h4><div class="metric-grid"><div class="metric"><b>Perdite fiscali</b><span>€ 76.000</span></div><div class="metric"><b>PN limite</b><span>€ 286.000</span></div><div class="metric"><b>Vitalità 2022</b><span>Da documentare</span></div><div class="metric"><b>Cap patrimoniale</b><span>Capiente</span></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-tests" class="tab">
+      <div class="section">
+        <h3>Presidi dell’art. 172, comma 7, TUIR</h3>
+        <div class="table-wrap"><table><thead><tr><th>Profilo</th><th>Societa A</th><th>Societa B</th><th>Lettura</th></tr></thead><tbody>
+          <tr><td>Perdite pregresse</td><td>€ 248.000</td><td>€ 76.000</td><td>Dato fiscale da riconciliare alle dichiarazioni</td></tr>
+          <tr><td>Limite patrimoniale</td><td>€ 42.000</td><td>€ 286.000</td><td>Il cap deve essere verificato autonomamente per ciascun soggetto</td></tr>
+          <tr><td>Vitalità 2022</td><td><span class="pill ok">OK</span></td><td><span class="pill warn">DA DOCUMENTARE</span></td><td>Ricavi caratteristici e costo del lavoro sono dati civilistici</td></tr>
+          <tr><td>Vitalità infrannuale</td><td><span class="pill ok">OK</span></td><td><span class="pill warn">DA DOCUMENTARE</span></td><td>Il periodo retrodatato richiede analisi separata e ragguaglio</td></tr>
+        </tbody></table></div>
+        <div class="note" style="margin-top:15px"><strong>Distinzione essenziale:</strong> il limite patrimoniale è un tetto quantitativo; il test di vitalità è un requisito qualitativo-operativo. I due profili non devono essere sovrapposti.</div>
+      </div>
+    </section>
+
+    <section id="tab-interim" class="tab">
+      <div class="section">
+        <h3>Bilancio infrannuale pre-fusione della Societa A</h3>
+        <p>Il periodo 01/01/2023–14/11/2023 documenta la presenza di attività economica reale immediatamente prima della fusione.</p>
+        <div class="grid">
+          <div class="stat"><b>Ricavi caratteristici</b><span>€ 354.000</span></div>
+          <div class="stat"><b>Totale ricavi</b><span>€ 401.000</span></div>
+          <div class="stat"><b>Costo del personale</b><span>€ 86.500</span></div>
+          <div class="stat"><b>Utile infrannuale</b><span>€ 37.800</span></div>
+          <div class="stat"><b>Attivo totale</b><span>€ 602.000</span></div>
+          <div class="stat"><b>Disponibilità liquide</b><span>€ 47.000</span></div>
+        </div>
+        <div class="callout" style="margin-top:16px"><strong>Valore probatorio:</strong> ricavi, personale, utile e struttura patrimoniale sono coerenti con un’impresa operativa e contrastano la rappresentazione di una società meramente titolare di perdite.</div>
+      </div>
+    </section>
+
+    <section id="tab-post" class="tab">
+      <div class="section">
+        <h3>Risultati consolidati post-fusione</h3>
+        <p>I dati successivi non sostituiscono i test richiesti al momento della fusione, ma possono confermare ex post la genuinità economica della riorganizzazione.</p>
+        <div class="table-wrap"><table><thead><tr><th>Anno</th><th>Ricavi</th><th>Utile</th><th>Margine netto</th></tr></thead><tbody>
+          <tr><td>2023</td><td>€ 495.000</td><td>€ 35.000</td><td>7,1%</td></tr>
+          <tr><td>2024</td><td>€ 681.000</td><td>€ 98.000</td><td>14,4%</td></tr>
+          <tr><td>2025</td><td>€ 724.000</td><td>€ 176.000</td><td>24,3%</td></tr>
+        </tbody></table></div>
+        <div class="grid" style="margin-top:15px"><div class="card"><h4>Continuità</h4><p>Crescita progressiva dei ricavi e mantenimento dell’attività operativa.</p></div><div class="card"><h4>Redditività</h4><p>Miglioramento dell’utile e del margine netto nel triennio.</p></div><div class="card"><h4>Coerenza industriale</h4><p>I risultati sono compatibili con una vera integrazione e non con un mero trasferimento di perdite.</p></div></div>
+      </div>
+    </section>
+
+    <section id="tab-memo" class="tab">
+      <div class="section">
+        <h3>Schema di memoria difensiva</h3>
+        <ol>
+          <li><strong>Premessa:</strong> descrivere fusione, date, retrodatazione fiscale e soggetti partecipanti.</li>
+          <li><strong>Regime applicabile:</strong> distinguere limite patrimoniale, vitalità 2022 e verifica infrannuale.</li>
+          <li><strong>Societa A:</strong> valorizzare bilancio infrannuale, ricavi caratteristici, costo del personale e utile; trattare separatamente il cap patrimoniale.</li>
+          <li><strong>Societa B:</strong> dimostrare la capienza del limite patrimoniale e produrre la riconciliazione definitiva del test di vitalità.</li>
+          <li><strong>Ragioni economiche:</strong> semplificazione, eliminazione di duplicazioni, integrazione operativa e patrimoniale.</li>
+          <li><strong>Risultati successivi:</strong> usarli come conferma della continuità e della genuinità dell’operazione, non come sanatoria retroattiva.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="tab-conclusions" class="tab">
+      <div class="section">
+        <h3>Conclusioni teoriche</h3>
+        <div class="callout"><strong>Conclusione principale.</strong> Nel caso simulato, la documentazione pre-fusione della Societa A dimostra operatività effettiva; il limite patrimoniale della Societa B risulta capiente; i risultati post-fusione confermano la razionalità industriale del progetto. La difesa deve comunque evitare conclusioni aggregate e dimostrare separatamente, per ciascuna società, i requisiti richiesti dalla disciplina applicabile.</div>
+        <div class="note" style="margin-top:15px"><strong>Limite del caso studio:</strong> gli esiti dipendono dai documenti effettivamente disponibili, dal regime ratione temporis e dalla corretta riconciliazione dei dati civilistici e fiscali.</div>
+      </div>
+    </section>
+
+    <div class="source">Dataset interamente sintetico. Nomi societari, date secondarie e valori sono stati modificati rispetto a qualunque caso reale. Non sono inclusi codici fiscali, partite IVA, nominativi, indirizzi, protocolli o riferimenti a procedimenti.</div>
+    <div class="footer">MERGER_EVALUATION • Caso studio teorico • Licenza consigliata per GitHub: MIT per il codice, CC BY 4.0 per i contenuti.</div>
+  </main>
+</div>
+<script>
+  const buttons = document.querySelectorAll('.nav button');
+  const tabs = document.querySelectorAll('.tab');
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    const name = btn.dataset.tab;
+    buttons.forEach(b => b.classList.remove('active'));
+    tabs.forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+  }));
+</script>
+</body>
+</html>
